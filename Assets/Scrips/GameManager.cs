@@ -7,11 +7,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Text gameOverText;
+    public Text scoreValueText;
     public int height { get; } = 20;
     public int width { get; } = 10;
 
     private Transform[,] occupiedGrid;
     private SpawnTetromino spawnTetromino;
+    private int score = 0;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         occupiedGrid = new Transform[width, height];
         spawnTetromino = FindObjectOfType<SpawnTetromino>();
+        scoreValueText.text = this.score.ToString();
     }
 
     public Transform GetGridPos (int x, int y)
@@ -49,14 +52,24 @@ public class GameManager : MonoBehaviour
 
     public void CheckLines()
     {
+        // Cada linha que é apagada aumenta o multiplicador para fazer mais pontos
+        int multiplier = 0;
         for (int i = height - 1; i >= 0; i--)
         {
             if (HasLine(i))
             {
+                multiplier++;
+                AddScore(100 * multiplier);
                 DeleteLine(i);
                 RowDown(i);
             }
         }
+    }
+
+    public void AddScore (int score)
+    {
+        this.score += score;
+        scoreValueText.text = this.score.ToString();
     }
 
     bool HasLine(int i)
