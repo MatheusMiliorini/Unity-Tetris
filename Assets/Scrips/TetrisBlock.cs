@@ -6,6 +6,7 @@ public class TetrisBlock : MonoBehaviour
 {
 
     public Vector3 rotationPoint;
+    public Vector3 previewOffset; // Subtrai ao rotationPoint (uma bela gambiarra)
     private float previousTime;
     private float fallTime = 0.8f;
     private SpawnTetromino spawnTetromino;
