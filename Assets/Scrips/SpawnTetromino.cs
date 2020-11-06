@@ -7,6 +7,7 @@ public class SpawnTetromino : MonoBehaviour
     public bool canSpawn = true;
     public GameObject[] tetrominos;
     public GameObject previewPosition;
+    public int UIScale = 25; // A escala na UI precisa ser maior
 
     private int nextTetromino;
     private GameObject preview;
@@ -32,12 +33,14 @@ public class SpawnTetromino : MonoBehaviour
     {
         nextTetromino = GetRandomTetromino();
         preview = Instantiate(tetrominos[nextTetromino], previewPosition.transform.position, Quaternion.identity, previewPosition.transform);
+        // Ajusta o tamanho
+        preview.transform.localScale = new Vector3(UIScale, UIScale, 0);
         // Encontra o Script
         TetrisBlock tetrisBlock = preview.GetComponent<TetrisBlock>();
         // Desativa para parar movimentação
         tetrisBlock.enabled = false;
         // Ajusta o offset
-        preview.transform.position -= (tetrisBlock.rotationPoint - tetrisBlock.previewOffset);
+        preview.transform.localPosition -= (tetrisBlock.rotationPoint * UIScale) - (tetrisBlock.previewOffset * UIScale);
         foreach (Transform children in preview.transform)
         {
             children.gameObject.layer = 5;

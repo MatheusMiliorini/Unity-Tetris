@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Text gameOverText;
     public Text scoreValueText;
+    public Text nextText; // Usado para posicionar o Tetromino do preview
     public int height { get; } = 20;
     public int width { get; } = 10;
 
